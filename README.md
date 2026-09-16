@@ -6,7 +6,7 @@
 
 1. 下载安装 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)（稳定版 Stable Build）
 2. 打开工具 → 「导入项目」
-   - **目录**：选择本文件夹 `cost-manager`
+   - **目录**：选择文件夹 
    - **AppID**：
      - 有自己的小程序账号 → 填入你的 AppID
      - 没有 → 点击「使用测试号」，或注册个人小程序（免费，个人主体即可）后填入
