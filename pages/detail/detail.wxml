@@ -1,0 +1,84 @@
+<view class="page detail-page {{largeText ? 'lt' : ''}}" wx:if="{{project}}">
+
+  <view class="detail-header">
+    <!-- 工程信息 -->
+    <view class="dh-card">
+      <view class="dh-top" bindtap="goProjectEdit">
+        <view class="dh-name text-ellipsis">{{project.name}}</view>
+        <view class="tag {{project.statusClass}}">{{project.statusText}}</view>
+        <view class="arrow"></view>
+      </view>
+      <view class="dh-meta" wx:if="{{project.client}}">甲方：{{project.client}}</view>
+      <view class="dh-meta" wx:if="{{project.period}}">工期：{{project.period}}</view>
+      <view class="dh-meta" wx:if="{{project.note}}">备注：{{project.note}}</view>
+
+      <view class="dh-divider"></view>
+
+      <view class="dh-figures">
+        <view class="dh-fig dh-fig-main">
+          <view class="dh-fig-label">结余</view>
+          <view class="dh-fig-value num {{summary.balanceClass}}">{{summary.balanceText}}</view>
+        </view>
+        <view class="dh-fig">
+          <view class="dh-fig-label">收入</view>
+          <view class="dh-fig-value num money-income">{{summary.incomeText}}</view>
+        </view>
+        <view class="dh-fig">
+          <view class="dh-fig-label">支出</view>
+          <view class="dh-fig-value num money-expense">{{summary.expenseText}}</view>
+        </view>
+        <view class="dh-fig">
+          <view class="dh-fig-label">笔数</view>
+          <view class="dh-fig-value num t-secondary">{{summary.count}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 明细列表 -->
+  <scroll-view scroll-y class="detail-scroll" enable-flex>
+    <record-list id="recordList" records="{{[]}}" bind:edit="onEditRecord" bind:change="onDataChange" bind:typechange="onFilterTypeChange"></record-list>
+  </scroll-view>
+
+</view>
+
+<view class="footer-bar {{largeText ? 'lt' : ''}}" wx:if="{{project}}">
+  <button wx:if="{{filterType !== 'all'}}" class="btn btn-primary btn-block" bindtap="goRecord">记一笔</button>
+  <button wx:else class="btn btn-primary btn-block" bindtap="openExport">导出表格</button>
+</view>
+
+<!-- 导出表格弹窗 -->
+<view class="modal-mask {{largeText ? 'lt' : ''}}" wx:if="{{showExport}}" bindtap="closeExport">
+  <view class="modal" catchtap="noop">
+    <view class="modal-title">导出表格</view>
+
+    <view class="ex-row">
+      <view class="ex-label">范围</view>
+      <view class="seg">
+        <view class="seg-item {{exportRange==='all'?'seg-on':''}}" data-range="all" bindtap="onExRange">全部</view>
+        <view class="seg-item {{exportRange==='month'?'seg-on':''}}" data-range="month" bindtap="onExRange">按月</view>
+      </view>
+    </view>
+
+    <view class="ex-row" wx:if="{{exportRange==='month'}}">
+      <view class="ex-label">月份</view>
+      <picker class="ex-picker-wrap" mode="selector" range="{{exportMonths}}" range-key="label" value="{{exportMonthIndex}}" bindchange="onExMonth">
+        <view class="ex-picker">{{exportMonthLabel || '请选择月份'}}</view>
+      </picker>
+    </view>
+
+    <view class="ex-row">
+      <view class="ex-label">类型</view>
+      <view class="chips">
+        <view class="chip {{exportTypes.full?'chip-on':''}}" data-type="full" bindtap="onExType">全面流水</view>
+        <view class="chip {{exportTypes.income?'chip-on':''}}" data-type="income" bindtap="onExType">收入</view>
+        <view class="chip {{exportTypes.expense?'chip-on':''}}" data-type="expense" bindtap="onExType">支出</view>
+      </view>
+    </view>
+
+    <view class="modal-actions">
+      <button class="btn btn-ghost" bindtap="closeExport">取消</button>
+      <button class="btn btn-primary" bindtap="doExport">导出</button>
+    </view>
+  </view>
+</view>

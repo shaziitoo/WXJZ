@@ -1,0 +1,238 @@
+.detail-page {
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.detail-header {
+  padding: 24rpx 24rpx 0;
+  flex-shrink: 0;
+}
+
+/* ---------- 工程信息卡 ---------- */
+.dh-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28rpx;
+  box-shadow: 0 2rpx 12rpx rgba(16, 24, 40, 0.04);
+}
+
+.dh-top {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.dh-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 34rpx;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.arrow {
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 3rpx solid var(--text-3);
+  border-right: 3rpx solid var(--text-3);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.dh-meta {
+  font-size: 24rpx;
+  color: var(--text-2);
+  margin-top: 8rpx;
+}
+
+.dh-divider {
+  height: 2rpx;
+  background: var(--line-2);
+  margin: 24rpx 0;
+}
+
+.dh-figures {
+  display: flex;
+  align-items: flex-start;
+}
+
+.dh-fig {
+  flex: 1;
+  min-width: 0;
+}
+
+.dh-fig-main {
+  flex: 1.4;
+}
+
+.dh-fig-label {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.dh-fig-value {
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-top: 4rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dh-fig-main .dh-fig-value {
+  font-size: 40rpx;
+}
+
+/* ---------- 明细列表 ---------- */
+.detail-scroll {
+  flex: 1;
+  padding: 0 24rpx 180rpx;
+  box-sizing: border-box;
+}
+
+/* ---------- 大字版适配：工程信息卡四列数字换行显示，避免截断 ---------- */
+.detail-page.lt .dh-figures {
+  flex-wrap: wrap;
+  gap: 24rpx 0;
+}
+
+.detail-page.lt .dh-figures .dh-fig,
+.detail-page.lt .dh-figures .dh-fig-main {
+  flex: none;
+  width: 50%;
+  min-width: 0;
+}
+
+.detail-page.lt .dh-figures .dh-fig-value {
+  font-size: 34rpx;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.detail-page.lt .dh-figures .dh-fig-main .dh-fig-value {
+  font-size: 44rpx;
+}
+
+/* ---------- 大屏适配 ---------- */
+@media (min-width: 768px) {
+  .detail-header,
+  .detail-scroll {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+/* ---------- 导出弹窗 ---------- */
+.modal-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 0 40rpx;
+}
+
+.modal {
+  width: 100%;
+  max-width: 620rpx;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 36rpx 32rpx 28rpx;
+  box-shadow: 0 8rpx 40rpx rgba(16, 24, 40, 0.18);
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 28rpx;
+}
+
+.ex-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.ex-label {
+  width: 80rpx;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: var(--text-2);
+}
+
+.seg {
+  flex: 1;
+  display: flex;
+  border: 2rpx solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.seg-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 28rpx;
+  color: var(--text-2);
+}
+
+.seg-on {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.ex-picker-wrap {
+  flex: 1;
+}
+
+.ex-picker {
+  border: 2rpx solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 16rpx 20rpx;
+  font-size: 28rpx;
+  color: var(--text);
+  text-align: center;
+}
+
+.chips {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.chip {
+  padding: 12rpx 28rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+}
+
+.chip-on {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 16rpx;
+}
+
+.modal-actions .btn {
+  flex: 1;
+}

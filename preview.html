@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="xGC39vApQkPKYdshtTmsFZ">
+<head data-page-node-id="wdUw8h72pmWz7KlQZZsrXY">
+<meta charset="utf-8" data-page-node-id="xqvoZKGRN3w89sEepoHrrH">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="rxfJ3zS16yeoh7CgEbf2Vx">
+<title>工程费用管理小程序 · 界面预览</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #f0f1f3;
+    color: #1a1a1a;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    padding: 40px 24px 64px;
+    line-height: 1.6;
+  }
+  .head { max-width: 1400px; margin: 0 auto 32px; }
+  h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.2px; }
+  .lead { color: #6b7280; font-size: 14px; margin-top: 6px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .meta span {
+    background: #fff; border: 1px solid #ebedf0; border-radius: 6px;
+    padding: 4px 10px; font-size: 12px; color: #6b7280;
+  }
+  .phones {
+    display: flex; flex-wrap: wrap; gap: 32px; justify-content: center;
+    max-width: 1400px; margin: 0 auto;
+  }
+  figure { display: flex; flex-direction: column; align-items: center; }
+  figcaption {
+    font-size: 13px; color: #6b7280; margin-bottom: 12px; font-weight: 500;
+  }
+  figcaption b { color: #185fa5; font-weight: 500; margin-right: 6px; }
+
+  /* ---------- 手机外壳 ---------- */
+  .phone {
+    width: 375px; height: 720px; background: #f4f5f7;
+    border-radius: 32px; border: 1px solid #dfe1e5;
+    box-shadow: 0 8px 28px rgba(16,24,40,0.10);
+    overflow: hidden; display: flex; flex-direction: column; position: relative;
+  }
+  .statusbar {
+    height: 34px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; font-size: 12px; color: #1a1a1a; background: #fff; flex-shrink: 0;
+  }
+  .sb-right { display: flex; align-items: center; gap: 4px; }
+  .sb-bar { width: 3px; background: #1a1a1a; border-radius: 1px; }
+  .sb-battery { width: 22px; height: 11px; border: 1px solid #1a1a1a; border-radius: 3px; position: relative; }
+  .sb-battery::after { content:""; position:absolute; right:-3px; top:3px; width:2px; height:5px; background:#1a1a1a; border-radius:0 1px 1px 0; }
+  .navbar {
+    height: 44px; background: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 500; flex-shrink: 0; border-bottom: 1px solid #f2f3f5;
+    position: relative;
+  }
+  .nav-back { position: absolute; left: 14px; font-size: 14px; color: #185fa5; }
+  .body { flex: 1; overflow: hidden; padding: 12px; }
+  .footer {
+    flex-shrink: 0; display: flex; gap: 10px; padding: 8px 12px calc(8px + 10px);
+    background: rgba(255,255,255,.96); border-top: 1px solid #ebedf0;
+  }
+  .home-bar {
+    position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+    width: 130px; height: 4px; border-radius: 2px; background: #1a1a1a; opacity: .25;
+  }
+
+  /* ---------- 通用组件 ---------- */
+  .card { background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 1px 6px rgba(16,24,40,.04); }
+  .card + .card { margin-top: 12px; }
+  .btn {
+    flex: 1; height: 44px; border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; font-size: 15px; font-weight: 500;
+  }
+  .btn-primary { background: #185fa5; color: #fff; }
+  .btn-ghost { background: #fff; color: #6b7280; border: 1px solid #ebedf0; }
+  .num { font-variant-numeric: tabular-nums; }
+  .expense { color: #e24b4a; }
+  .income { color: #639922; }
+  .secondary { color: #6b7280; }
+  .tertiary { color: #9ca3af; }
+  .tag { display:inline-flex; align-items:center; height:20px; padding:0 8px; border-radius:10px; font-size:11px; }
+  .tag-primary { background:#e6f1fb; color:#185fa5; }
+  .tag-income { background:#eaf3de; color:#3b6d11; }
+  .tag-gray { background:#f2f3f5; color:#6b7280; }
+  .tag-expense { background:#fcebeb; color:#e24b4a; }
+  .ellipsis { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .empty { padding: 50px 0; text-align: center; color: #9ca3af; font-size: 14px; }
+
+  /* ---------- 列表页 ---------- */
+  .hero {
+    background: linear-gradient(0deg,#185fa5,#1f6fb8); border-radius: 8px;
+    padding: 18px 16px 16px; color: #fff; margin-bottom: 12px;
+  }
+  .hero-label { font-size: 12px; opacity: .82; }
+  .hero-value { font-size: 28px; font-weight: 500; color:#fff; margin-top: 2px; }
+  .hero-row { display:flex; align-items:center; margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,.22); }
+  .hero-item { flex:1; }
+  .hero-item span { display:block; font-size:11px; opacity:.82; }
+  .hero-item b { display:block; font-size:15px; font-weight:500; color:#fff; margin-top:2px; }
+  .hero-div { width:1px; height:22px; background:rgba(255,255,255,.22); }
+
+  .segment { display:flex; background:#fff; border-radius:5px; padding:3px; margin-bottom:12px; }
+  .seg { flex:1; text-align:center; height:32px; line-height:32px; font-size:13px; color:#6b7280; border-radius:4px; }
+  .seg-on { background:#e6f1fb; color:#185fa5; font-weight:500; }
+
+  .pcard { background:#fff; border-radius:8px; padding:14px; box-shadow:0 1px 6px rgba(16,24,40,.04); margin-bottom:12px; }
+  .pc-head { display:flex; align-items:center; gap:6px; }
+  .pc-name { flex:1; font-size:16px; font-weight:500; }
+  .dots { display:flex; gap:2px; }
+  .dots i { width:3px; height:3px; border-radius:50%; background:#9ca3af; display:block; }
+  .pc-meta { font-size:12px; color:#6b7280; margin-top:5px; }
+  .pc-meta i { color:#9ca3af; font-style:normal; margin-right:6px; }
+  .pc-line { height:1px; background:#f2f3f5; margin:11px 0; }
+  .pc-figs { display:flex; }
+  .pc-fig { flex:1; }
+  .pc-fig span { display:block; font-size:11px; color:#9ca3af; }
+  .pc-fig b { display:block; font-size:14px; font-weight:500; margin-top:2px; }
+
+  /* ---------- 详情页 ---------- */
+  .dh-top { display:flex; align-items:center; gap:6px; }
+  .dh-name { flex:1; font-size:17px; font-weight:500; }
+  .arrow { width:8px; height:8px; border-top:1.5px solid #9ca3af; border-right:1.5px solid #9ca3af; transform:rotate(45deg); }
+  .dh-meta { font-size:12px; color:#6b7280; margin-top:4px; }
+  .dh-figs { display:flex; margin-top:12px; }
+  .dh-fig { flex:1; }
+  .dh-fig.main { flex:1.4; }
+  .dh-fig span { display:block; font-size:11px; color:#9ca3af; }
+  .dh-fig b { display:block; font-size:15px; font-weight:500; margin-top:2px; }
+  .dh-fig.main b { font-size:20px; }
+  .tabs { display:flex; gap:20px; padding:14px 4px 8px; }
+  .tab { font-size:15px; color:#9ca3af; position:relative; padding-bottom:5px; }
+  .tab.on { color:#1a1a1a; font-weight:500; }
+  .tab.on::after { content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:0; width:18px; height:3px; border-radius:2px; background:#185fa5; }
+
+  .filterbar { display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:8px 10px; margin-bottom:10px; }
+  .ftypes { display:flex; gap:6px; }
+  .ftype { padding:0 14px; height:30px; line-height:30px; border-radius:15px; font-size:13px; color:#6b7280; background:#f2f3f5; }
+  .ftype.on { background:#185fa5; color:#fff; font-weight:500; }
+  .ftoggle { display:flex; align-items:center; gap:4px; font-size:13px; color:#9ca3af; padding:0 10px; height:30px; line-height:30px; }
+  .caret { width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid currentColor; }
+
+  .group { background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 1px 6px rgba(16,24,40,.04); margin-bottom:10px; }
+  .ghead { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#fafbfc; border-bottom:1px solid #f2f3f5; }
+  .ghead-l { display:flex; align-items:baseline; gap:6px; }
+  .gdate { font-size:13px; font-weight:500; }
+  .gweek { font-size:11px; color:#9ca3af; }
+  .ghead-r { display:flex; gap:10px; font-size:12px; }
+  .rec { display:flex; align-items:center; padding:12px 14px; border-bottom:1px solid #f2f3f5; }
+  .rec:last-child { border-bottom:none; }
+  .rdot { width:20px; height:20px; border-radius:5px; flex-shrink:0; margin-right:10px; }
+  .rmain { flex:1; min-width:0; }
+  .rname { font-size:14px; }
+  .rnote { font-size:11.5px; color:#9ca3af; margin-top:1px; }
+  .ramt { font-size:15px; font-weight:500; margin-left:10px; }
+
+  /* ---------- 数据 ---------- */
+  .kpis { display:flex; gap:8px; }
+  .kpi { flex:1; background:#fff; border-radius:8px; padding:12px 10px; box-shadow:0 1px 6px rgba(16,24,40,.04); }
+  .kpi span { font-size:11.5px; color:#9ca3af; }
+  .kpi b { display:block; font-size:16px; font-weight:500; margin-top:4px; }
+  .kpisub { display:flex; gap:6px; flex-wrap:wrap; padding:8px 2px 12px; font-size:12px; color:#9ca3af; }
+  .chead { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px; }
+  .ctitle { font-size:15px; font-weight:500; }
+  .csub { font-size:12px; color:#9ca3af; }
+  .legend { display:flex; gap:10px; padding-top:3px; }
+  .legend div { display:flex; align-items:center; font-size:11px; color:#6b7280; }
+  .legend i { width:8px; height:8px; border-radius:2px; margin-right:4px; }
+  canvas { width:100%; display:block; }
+  .cbar { height: 170px; }
+  .cpie { height: 190px; }
+  .cfoot { margin-top:8px; font-size:11.5px; color:#9ca3af; }
+  .miniseg { display:flex; background:#f2f3f5; border-radius:4px; padding:2px; }
+  .miniseg div { padding:0 11px; height:26px; line-height:26px; font-size:12px; color:#6b7280; border-radius:3px; }
+  .miniseg div.on { background:#fff; color:#1a1a1a; font-weight:500; }
+  .rank { display:flex; flex-direction:column; gap:11px; margin-top:8px; }
+  .ri-top { display:flex; align-items:center; gap:6px; }
+  .ri-dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+  .ri-name { flex:1; font-size:13px; }
+  .ri-pct { font-size:13px; color:#6b7280; }
+  .ri-bar { height:5px; border-radius:3px; background:#f2f3f5; margin:5px 0 4px; overflow:hidden; }
+  .ri-bar i { display:block; height:100%; border-radius:3px; }
+  .ri-amt { font-size:11px; color:#9ca3af; }
+
+  /* ---------- 记一笔 ---------- */
+  .tswitch { display:flex; background:#fff; border-radius:5px; padding:3px; margin-bottom:12px; }
+  .ts { flex:1; text-align:center; height:38px; line-height:38px; font-size:15px; color:#6b7280; border-radius:4px; }
+  .ts.on-e { background:#fcebeb; color:#e24b4a; font-weight:500; }
+  .ts.on-i { background:#eaf3de; color:#3b6d11; font-weight:500; }
+  .amount-card { padding:16px 14px; }
+  .alabel { font-size:12px; color:#9ca3af; }
+  .arow { display:flex; align-items:baseline; margin-top:6px; }
+  .asym { font-size:22px; font-weight:500; margin-right:6px; }
+  .ainput { font-size:34px; font-weight:500; color:#1a1a1a; }
+  .row { display:flex; align-items:center; justify-content:space-between; min-height:28px; }
+  .rowlabel { font-size:14px; color:#6b7280; width:60px; }
+  .rowval { display:flex; align-items:center; font-size:15px; }
+  .rowval em { font-size:12px; color:#9ca3af; font-style:normal; margin-left:8px; }
+  .rowinput { flex:1; text-align:right; font-size:15px; color:#9ca3af; }
+  .grid { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .cell {
+    width:calc(25% - 6px); height:50px; border-radius:5px; background:#f2f3f5;
+    display:flex; align-items:center; justify-content:center; padding:0 4px;
+    font-size:12px; text-align:center; line-height:1.3; border:1px solid transparent;
+  }
+  .cell.on { color:#fff; }
+  .cell.add { background:#fff; border:1px dashed #ebedf0; flex-direction:column; color:#9ca3af; }
+  .cell.add b { font-size:16px; font-weight:400; line-height:1; }
+  .cell.add span { font-size:11px; margin-top:2px; }
+</style>
+</head>
+<body data-page-node-id="vdYtfcFBr5Yv2mDYsU2EJx">
+
+<div class="head" data-page-node-id="MCvnXB0FRowZJTkD8xgWuf">
+  <h1 data-page-node-id="5jbFuYtQpzdmrLFtMTueOj">工程费用管理小程序 · 界面预览</h1>
+  <p class="lead" data-page-node-id="k976bodZYdVqYsHNw5Y1Q1">原生微信小程序 · 本地存储无需服务器 · 数据全部保存在本机</p>
+  <div class="meta" data-page-node-id="nJlp4ryuUPfrSk8abkIWNn">
+    <span data-page-node-id="3dRjteVFQf928BiFCFzNTF">5 个页面 + 2 个组件</span>
+    <span data-page-node-id="quuFab9JK1F449nulqhRiS">多工程增删查改</span>
+    <span data-page-node-id="AOtzrbbNoloDLCJfNR469e">支出 / 收入双类别体系</span>
+    <span data-page-node-id="AHv2P59xAigriHivi6Dk5b">数据页（环形图 + 柱状图）</span>
+    <span data-page-node-id="WjTjsVV157J9qoVvl543rE">rpx 响应式布局</span>
+  </div>
+</div>
+
+<div class="phones" data-page-node-id="ogsMNb0o3bmBbLTCsTXQiF">
+
+  <!-- 1. 工程列表 -->
+  <figure data-page-node-id="whiqWU4X3FaJgTi5DmojvL">
+    <figcaption data-page-node-id="Oh26ZelYX7xSfY4bnwxafM"><b data-page-node-id="8MLBJCQiPQ06I9p0Rc6EfV">01</b>工程列表 · 首页</figcaption>
+    <div class="phone" data-page-node-id="9Pyl74EfRvGsbnjr0omrwR">
+      <div class="statusbar" data-page-node-id="zKzj6Fwxj2sSfB6kXZAhfa"><span data-page-node-id="7UBc96tA1qIi0tYjl1P28K">11:13</span><div class="sb-right" data-page-node-id="y6eStrAXQE6SCaqhVC0m9g">
+        <div class="sb-bar" style="height:4px" data-page-node-id="dJnIpbREfP47K9rSW6Hc7H"></div><div class="sb-bar" style="height:6px" data-page-node-id="3fNjErwz4x4GkQn6upgdgp"></div>
+        <div class="sb-bar" style="height:8px" data-page-node-id="LxbUECjq8VnyVOoBRNYPH5"></div><div class="sb-bar" style="height:10px" data-page-node-id="vEC3T58dQUFnY9WwnBGGj6"></div>
+        <div class="sb-battery" data-page-node-id="t8WNGPHlSsZjF7YYIDX9AN"></div></div></div>
+      <div class="navbar" data-page-node-id="QOVa9K7SlAqWgq9frB5FHX">工程费用管理</div>
+      <div class="body" data-page-node-id="ECz5xKNmrmEpbKzMLBJYnB">
+        <div class="hero" data-page-node-id="0iwl7rMkHGk98n40kAZ3qj">
+          <div class="hero-label" data-page-node-id="BLzgyaQo1rTx3OmTqpht6t">全部工程合计</div>
+          <div class="hero-value num" data-page-node-id="woT3MOByhCPIcOUN3GF24i">¥7.80万</div>
+          <div class="hero-row" data-page-node-id="K9QZaBEDClV9yqsHiVtclj">
+            <div class="hero-item" data-page-node-id="GY2xlWOP1Kry0fyxmmpweF"><span data-page-node-id="MzP9SCOlxX1BLsBHpW1Aoi">总收入</span><b class="num" data-page-node-id="QllKxzyZ2wyX3AKKsNL2hQ">¥64.40万</b></div>
+            <div class="hero-div" data-page-node-id="W6iXzzIrJxBbs2kjqHBsjD"></div>
+            <div class="hero-item" data-page-node-id="VBBrGMICUF4CsPBOgvKpqg"><span data-page-node-id="d5fFIHgShqgKzK5KbMLME7">总支出</span><b class="num" data-page-node-id="GPHc8Va89uzRFiPKUbWHCN">¥56.60万</b></div>
+            <div class="hero-div" data-page-node-id="v04kZnDYJIGdRpfRwADrho"></div>
+            <div class="hero-item" data-page-node-id="6CR1VomEjXHKUFuVwJaVXC"><span data-page-node-id="92Y6FBh0x3WKSm7ooDVkJo">工程数</span><b class="num" data-page-node-id="4vHcaZwRVBhRUN8iU7K9aG">3</b></div>
+          </div>
+        </div>
+        <div class="segment" data-page-node-id="slHXoyaKV2T4LiVAgt0icD">
+          <div class="seg seg-on" data-page-node-id="naIrycGKGayFEcXi2k648f">全部</div><div class="seg" data-page-node-id="sIWIqQDN2DHErHUJH9lA3s">进行中</div><div class="seg" data-page-node-id="cX93ODgMv5NbT6i8sLLgln">已完工</div>
+        </div>
+        <div class="pcard" data-page-node-id="tWI7r0KXQ00LBQOeHYpjzt">
+          <div class="pc-head" data-page-node-id="jANByk3YrQiL6tHdkG46A4">
+            <div class="pc-name ellipsis" data-page-node-id="7HXs1eaukkNHWev0jc0q3Q">滨江花园 1 号楼</div>
+            <div class="tag tag-primary" data-page-node-id="J1EkSMRGj3DYQZY44oBhGk">进行中</div>
+            <div class="dots" data-page-node-id="JfYYxGlx7f9qPY8FJwzZNl"><i data-page-node-id="oAndiqHglygzkIs1D4QVBQ"></i><i data-page-node-id="wdAyPXNU5aXybDPxmmMTzc"></i><i data-page-node-id="W8bjJ5jcOzpvrBIc2Vy8pU"></i></div>
+          </div>
+          <div class="pc-meta" data-page-node-id="82gaQT8hvxAvCPPFOCgFWf"><i data-page-node-id="Oga54eQjR3QTilZHP1PYdo">甲方</i>滨江置业有限公司</div>
+          <div class="pc-meta" data-page-node-id="LDR4OQJI5kFPyonIyHaCSE"><i data-page-node-id="YEgiuZdSeBzWqibu0pOHtS">工期</i>2026-01-01 至 2026-12-31</div>
+          <div class="pc-line" data-page-node-id="vshJIu46RasZKEQvhvp7Qg"></div>
+          <div class="pc-figs" data-page-node-id="UuEkEDE0SUajXwAVS8Z8jG">
+            <div class="pc-fig" data-page-node-id="eDkZvzQ6eG88Gd31JtMCPL"><span data-page-node-id="26KS4HpREV6BvXYNmLJ1Ls">收入</span><b class="num income" data-page-node-id="LGh5qDpdpi0kTFs3snjkQc">¥45.80万</b></div>
+            <div class="pc-fig" data-page-node-id="WSJ3AHQxDADhbBcY264ZiD"><span data-page-node-id="uw57a29jRhyqbfdtJgOV9w">支出</span><b class="num expense" data-page-node-id="RgUkPiadI7QyIrWiV5HRE1">¥32.42万</b></div>
+            <div class="pc-fig" data-page-node-id="K1xhbiVWdmtJ8ytoWczoH9"><span data-page-node-id="Hxdr0SV9GvQGZqOb4HPyEa">结余</span><b class="num income" data-page-node-id="jEzeAKd26HaUKScZ5HUwBh">¥13.38万</b></div>
+            <div class="pc-fig" style="text-align:right" data-page-node-id="LhzYPEbwrdayDeO6fRpwpy"><span data-page-node-id="TlgXpUOuebLTImktLPr62d">笔数</span><b class="num secondary" data-page-node-id="waNYfmhkF24wuNArI6L2gv">42</b></div>
+          </div>
+        </div>
+        <div class="pcard" data-page-node-id="w7CbATGBYHTDj2IMDuqT2h">
+          <div class="pc-head" data-page-node-id="4nieFY6KaGX36hvEYSxyCf">
+            <div class="pc-name ellipsis" data-page-node-id="GJrPqhWJc20368aitLt84Q">厂房钢结构工程</div>
+            <div class="tag tag-income" data-page-node-id="s16IFJDt72lzcQQq7RlmH0">已完工</div>
+            <div class="dots" data-page-node-id="40euA8Xfmsgp011EOvQw9i"><i data-page-node-id="zqXoulmbcUxs0iEWkhrYHu"></i><i data-page-node-id="mvEzO6eC3ZqaoMpnPHLf9G"></i><i data-page-node-id="3U3BejdppcK7HAOUJE1Lcu"></i></div>
+          </div>
+          <div class="pc-meta" data-page-node-id="4sVrKA4JitXkHM06Skm2rl"><i data-page-node-id="6T4vpkBvLM2N9Y2w290wJd">甲方</i>华远机械制造</div>
+          <div class="pc-line" data-page-node-id="iWUswkUbNPtZbOtMmmLCxT"></div>
+          <div class="pc-figs" data-page-node-id="21uZCkoB5Dba0JvWf8MoO0">
+            <div class="pc-fig" data-page-node-id="iuL3IOBIOyR6kGhORMzDnv"><span data-page-node-id="yvF9QZIA5aRyGRmcWWmjyu">收入</span><b class="num income" data-page-node-id="fK0muMD3AsBainYymTQRer">¥18.60万</b></div>
+            <div class="pc-fig" data-page-node-id="kscI25dMv82pT6HjgDUAxB"><span data-page-node-id="Bptv497o1kg9eFcq7EEMVV">支出</span><b class="num expense" data-page-node-id="Q2cGsdOg02oyZHHL0Z5zeN">¥21.20万</b></div>
+            <div class="pc-fig" data-page-node-id="6zRFn89RpECJufUZAHKh8K"><span data-page-node-id="BAdgtgbDv0kfOv3rpMpGrJ">结余</span><b class="num expense" data-page-node-id="OR30zSsFiUr18aJ10FXU70">-¥2.60万</b></div>
+            <div class="pc-fig" style="text-align:right" data-page-node-id="jBoRu86pNcwMXXIWJ0rMHG"><span data-page-node-id="zMN9HauovIeu9h0ZNXENCz">笔数</span><b class="num secondary" data-page-node-id="aDfajGZH1Qve1GPE7RPffG">17</b></div>
+          </div>
+        </div>
+        <div class="pcard" data-page-node-id="Oth6kx41xtJ9cbgs91yPnA">
+          <div class="pc-head" data-page-node-id="0tHhNFdVryQLDdH0oNGaDE">
+            <div class="pc-name ellipsis" data-page-node-id="nGSZMuFngPOEVVsHgHwYFB">市政道路维修</div>
+            <div class="tag tag-primary" data-page-node-id="qQJB0zqfQdpQWzwOGGJB3j">进行中</div>
+            <div class="dots" data-page-node-id="eJ0KzXeeDNmuCFGJxXeDSf"><i data-page-node-id="MisVCMZBQ9UHJdA7f7ByHx"></i><i data-page-node-id="rCd2GroxdXFCqzfCkk4Ekg"></i><i data-page-node-id="iPXH6x2bMsFEObdYN9QjVp"></i></div>
+          </div>
+          <div class="pc-meta" data-page-node-id="Fh0vZuWF2hSGfO2GpZLCjZ"><i data-page-node-id="jvb9Bpg08bXBUgCkiWFkQ2">工期</i>2026-08-15 至 未定</div>
+          <div class="pc-line" data-page-node-id="ChkNGxWGdG3XKRFl6kliTI"></div>
+          <div class="pc-figs" data-page-node-id="kjkuLFyYr8JVOJjer8iS4j">
+            <div class="pc-fig" data-page-node-id="0Zcai8eWkEWcwev9JYqKMh"><span data-page-node-id="KsHiOy5KZuuvEaZJuAySfT">收入</span><b class="num secondary" data-page-node-id="FtfHDwaBq5XL3uGTqYDYDI">¥0.00</b></div>
+            <div class="pc-fig" data-page-node-id="KjkpVCUrpxOLQ8PIhKB6EQ"><span data-page-node-id="rsh6yoDXLeQALloI2tUg1N">支出</span><b class="num expense" data-page-node-id="SxMZcpFoQuBs7Rz2VHnYfH">¥2.98万</b></div>
+            <div class="pc-fig" data-page-node-id="sNjdBMT2TNlZmEgA4Y27MP"><span data-page-node-id="W79bP5LdxOqWtFjNy1rUdl">结余</span><b class="num expense" data-page-node-id="JAFI9iAPoOlZWNwLFrkeOd">-¥2.98万</b></div>
+            <div class="pc-fig" style="text-align:right" data-page-node-id="ND1KZmwiDop416ZUX4bsyA"><span data-page-node-id="sbDhFww6CBKhJjVHslHZnp">笔数</span><b class="num secondary" data-page-node-id="8v7g1LN5culQvVt3GzLR4U">6</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer" data-page-node-id="eVKqpl1JA0oDR85iVGtwpp">
+        <div class="btn btn-primary" data-page-node-id="ok0Cz30cZmWflmoCgFNX9a">新建工程</div>
+        <div class="btn btn-ghost" data-page-node-id="xeBGj1Qez1TBoa8A6PBXkj">类别管理</div>
+      </div>
+      <div class="home-bar" data-page-node-id="j4pzZ36TiuxeYXAzvEBOoY"></div>
+    </div>
+  </figure>
+
+  <!-- 2. 明细 -->
+  <figure data-page-node-id="fhygnJdDyY41GZ8dl9XA2R">
+    <figcaption data-page-node-id="qInHObQXGM5LWvuzrVNSRl"><b data-page-node-id="6cuGPBNuWtjvnYZmLqr96g">02</b>工程详情 · 流水明细（可按类型/日期/类别/关键字筛选）</figcaption>
+    <div class="phone" data-page-node-id="ueksG4jOToa8DdYokthISg">
+      <div class="statusbar" data-page-node-id="9HEg8bc19uBlmTdTLg53Yg"><span data-page-node-id="Ou6pEfyWAzXjGe3CBtyiH2">11:13</span><div class="sb-right" data-page-node-id="hCFBJibS9X2bExCO6TlHvi">
+        <div class="sb-bar" style="height:4px" data-page-node-id="jd2m25IAtVAKMaBRc4aEDI"></div><div class="sb-bar" style="height:6px" data-page-node-id="uIZUe1tuGJebFuTLXdJgqw"></div>
+        <div class="sb-bar" style="height:8px" data-page-node-id="hvD6dVEr2IPcyIJCFtkJUb"></div><div class="sb-bar" style="height:10px" data-page-node-id="gzPp4AivuiLCbyqmcUfYMK"></div>
+        <div class="sb-battery" data-page-node-id="nVapmz3zi20sWHz70darof"></div></div></div>
+      <div class="navbar" data-page-node-id="w1WRxCsV7CR0O7WUmHBBUj"><span class="nav-back" data-page-node-id="gdihLSSvjOnpMPmyyBhtr5">返回</span>滨江花园 1 号楼</div>
+      <div class="body" style="padding-top:12px" data-page-node-id="vcH09pGOpzKrXcyk6dDG71">
+        <div class="card" data-page-node-id="fhbLauujroqBs33O2YJKIN">
+          <div class="dh-top" data-page-node-id="GAsCluJBgPBIFKXnMrq8Gw">
+            <div class="dh-name ellipsis" data-page-node-id="dVRTtLCP4kXhR3P6LwPI22">滨江花园 1 号楼</div>
+            <div class="tag tag-primary" data-page-node-id="NGuavTGOFABqv1b6sm4FpR">进行中</div>
+            <div class="arrow" data-page-node-id="MCC4xg9zhAwQwbbgfMkuA4"></div>
+          </div>
+          <div class="dh-meta" data-page-node-id="2FDU42bM3GMHvEAWqw0GuK">甲方：滨江置业有限公司</div>
+          <div class="dh-meta" data-page-node-id="fPSEEpvEZenhDQwdzVpv8T">工期：2026-01-01 至 2026-12-31</div>
+          <div style="height:1px;background:#f2f3f5;margin:12px 0" data-page-node-id="cdBCAqVidxnAHFG3ZlbdbK"></div>
+          <div class="dh-figs" data-page-node-id="AAFX1jtbwEOCCttxnnsdvk">
+            <div class="dh-fig main" data-page-node-id="CxcQ1uFbr7OfLbzKUp28ET"><span data-page-node-id="mWRpEZbX605RwCLcUL6gEo">结余</span><b class="num income" data-page-node-id="451EhN5E64TDHNpYckdvRM">¥13.38万</b></div>
+            <div class="dh-fig" data-page-node-id="Uxz9P4NHfytS3oNyK0DeFc"><span data-page-node-id="xz4VtaZV9ndV7eFVzgInEh">收入</span><b class="num income" data-page-node-id="qPUQiFj8DGiiGdQ2AyPblx">¥45.80万</b></div>
+            <div class="dh-fig" data-page-node-id="VfBXEO7DOscz4xoBNA5BTI"><span data-page-node-id="0d5yq9wQPYy2e2eCfMVliC">支出</span><b class="num expense" data-page-node-id="m0GGK85au56IDriiR4MY2A">¥32.42万</b></div>
+            <div class="dh-fig" data-page-node-id="RD7vtQi0mASnoyrbefSlEo"><span data-page-node-id="MCb7j3pHPecVOri9yXGpuX">笔数</span><b class="num secondary" data-page-node-id="tW8G8rDYvZqaZjjGuZie21">42</b></div>
+          </div>
+        </div>
+        <div class="tabs" data-page-node-id="UF0AVHiyiAeijoHiwUudAW"><div class="tab on" data-page-node-id="NRBw1AzZdpUBADtdAdqDx6">明细</div><div class="tab" data-page-node-id="lDaWzWoPjH1xnCifzhFZjZ">数据</div></div>
+        <div class="filterbar" data-page-node-id="ExTiC9PfaI0rEGocfRqCrT">
+          <div class="ftypes" data-page-node-id="UoJYhKH3sB9AuBTo0K1Whv">
+            <div class="ftype on" data-page-node-id="ivAcVQIzJOfFSJCYkAk6S5">全部</div><div class="ftype" data-page-node-id="XbWev4yKCju0xmrg4yxgRa">支出</div><div class="ftype" data-page-node-id="gZVFw9YNGlECYouvZSt9XH">收入</div>
+          </div>
+          <div class="ftoggle" data-page-node-id="wlr5dFUwbnFmAyhdWiu4BU">筛选<div class="caret" data-page-node-id="TUnopvBKOHthoVhCXhXBfg"></div></div>
+        </div>
+        <div class="group" data-page-node-id="d0yJTLuAhkE2Haq9WK6DKd">
+          <div class="ghead" data-page-node-id="J8o3PCpaI4FDUeYd34BOsu">
+            <div class="ghead-l" data-page-node-id="dIXTsCgAQGxBVHGXd7NbO8"><span class="gdate" data-page-node-id="bcUCG85sAsuKhvuWImBQPE">今天</span><span class="gweek" data-page-node-id="P8B9FB6ZQZgz8czGjnsYFx">周六</span></div>
+            <div class="ghead-r" data-page-node-id="IkBMJ589xVx63eiaGcJhWy"><span class="income num" data-page-node-id="sSy5XGD7Cb2aotZi9rR8EZ">+¥80,000.00</span><span class="expense num" data-page-node-id="6wGvXAYCYDiH9ngMhHqi5Q">-¥20,600.00</span></div>
+          </div>
+          <div class="rec" data-page-node-id="2uI9Z5QwYnD15uHRrWvB94">
+            <div class="rdot" style="background:#639922" data-page-node-id="8HMN6neRQy5n82ejsjDbzH"></div>
+            <div class="rmain" data-page-node-id="wRjubcJHUthNz8BaYaO1JS"><div class="rname" data-page-node-id="GUBnDjQ8YK0CUkwJtDJ1Ax">进度款</div><div class="rnote" data-page-node-id="tn1gipkVnMr8mUX9zDAmhM">第二期工程款</div></div>
+            <div class="ramt num income" data-page-node-id="oNr4vWEhU9Zmpg6nKSqpcC">+¥80,000.00</div>
+          </div>
+          <div class="rec" data-page-node-id="eHyapBhaMn02LZyyePjHrd">
+            <div class="rdot" style="background:#378add" data-page-node-id="NFZrC17G1ADblkLwWdp3Sm"></div>
+            <div class="rmain" data-page-node-id="dTI8551oCfRzoYpja3AD09"><div class="rname" data-page-node-id="oiydz5mQNEFOklfQDlr1n5">材料费</div><div class="rnote" data-page-node-id="1kEx5AO4aR3Iify99cqYsw">钢筋 3.2 吨</div></div>
+            <div class="ramt num expense" data-page-node-id="sVEQIyA7Ao2KbeyvJsH0uc">-¥12,600.00</div>
+          </div>
+          <div class="rec" data-page-node-id="m7pqAAYA4ChD4w00MiZky2">
+            <div class="rdot" style="background:#1d9e75" data-page-node-id="HLpK3RAUJyRAgq1mIDqVj9"></div>
+            <div class="rmain" data-page-node-id="kj7IlOJlDOnwDgH14HWEiD"><div class="rname" data-page-node-id="1RgG1UYvVHHy88jPJmPXh8">人工费</div><div class="rnote" data-page-node-id="cFFFwpMmhok30TdW83uOoI">钢筋班组</div></div>
+            <div class="ramt num expense" data-page-node-id="WKxNSrPQ8svf0Xnvt1kDBl">-¥8,000.00</div>
+          </div>
+        </div>
+        <div class="group" data-page-node-id="y1vxB7s8JD4HmJ0nnW1HAy">
+          <div class="ghead" data-page-node-id="qxYmwunxFjhc78Xy0wpG6H">
+            <div class="ghead-l" data-page-node-id="NXgCXq8TvRlLYN7s8K8QqX"><span class="gdate" data-page-node-id="EswxSdNHLyVH0Ktx8vaEm9">昨天</span><span class="gweek" data-page-node-id="rwrCwEMzv3l6lA3tioLMcQ">周五</span></div>
+            <div class="ghead-r" data-page-node-id="6WzFKGWcKFCeX1HBBC1hsn"><span class="expense num" data-page-node-id="aukVGkdknNiXXMIvaSSaIb">-¥4,700.00</span></div>
+          </div>
+          <div class="rec" data-page-node-id="SVR0iXsUiagqA7rVLhnEhT">
+            <div class="rdot" style="background:#ef9f27" data-page-node-id="0jmbBBgGW9vHX0efjvYqDT"></div>
+            <div class="rmain" data-page-node-id="LJlhY4DxccOZK5EkNEZ7Te"><div class="rname" data-page-node-id="vKTVZNBsEdoJOicuKmKHZr">机械租赁</div><div class="rnote" data-page-node-id="p5wHGkM45TBZh86BdsBkD0">吊车 2 个台班</div></div>
+            <div class="ramt num expense" data-page-node-id="EIMXz8mumatPl60vTJlw62">-¥3,200.00</div>
+          </div>
+          <div class="rec" data-page-node-id="94tzILu1xQxqFYd88Ik5lT">
+            <div class="rdot" style="background:#d4537e" data-page-node-id="7kjohNuItp8BLdZZXkqz40"></div>
+            <div class="rmain" data-page-node-id="hXXhSZ6h8Nxs6HiI9bMECY"><div class="rname" data-page-node-id="M07LIrXujmP1BRGgrrP4Xy">运输费</div><div class="rnote" data-page-node-id="K0kegHtdqc2SkloKRKBFlx">渣土清运</div></div>
+            <div class="ramt num expense" data-page-node-id="ssFolz8ksjv0uBvFQ0fI1m">-¥1,500.00</div>
+          </div>
+        </div>
+        <div class="group" data-page-node-id="Vedc6B9YeQm3wZYaAifOi4">
+          <div class="ghead" data-page-node-id="PEEZ1ezEmz6DogCJ7SXQxc">
+            <div class="ghead-l" data-page-node-id="hvA5Zcsy9gPU5MILFSHOg7"><span class="gdate" data-page-node-id="h1y5zJGvEPyCPPUDB6tMg8">9月3日</span><span class="gweek" data-page-node-id="TRWCktazVMCVDK6jEcWHL4">周四</span></div>
+            <div class="ghead-r" data-page-node-id="uA8rDRZKcJNcQvH5tjYqWZ"><span class="expense num" data-page-node-id="rU4rimV5rYcdI1OOW04Bmq">-¥36,300.00</span></div>
+          </div>
+          <div class="rec" data-page-node-id="MOoF0waGLyQlubwHZOeJcA">
+            <div class="rdot" style="background:#378add" data-page-node-id="TuIDEoRbXQDMFbkApnD4kS"></div>
+            <div class="rmain" data-page-node-id="B594IwN0YNFraniO7GS3dB"><div class="rname" data-page-node-id="y2JGGmheMzH4HY1yH7WVKv">材料费</div><div class="rnote" data-page-node-id="C4dXqISOuVWqs3CQKi5R0F">商砼 C30 · 60 方</div></div>
+            <div class="ramt num expense" data-page-node-id="mX8tkjsyYLpSpEA2K2DQXD">-¥24,300.00</div>
+          </div>
+          <div class="rec" data-page-node-id="U1aLkmkV47P1VSUtFgKJ9T">
+            <div class="rdot" style="background:#1d9e75" data-page-node-id="Pnr56UEQm2pfqL5aDrk1l9"></div>
+            <div class="rmain" data-page-node-id="QueE9otbnZMQ51nRSKxY5i"><div class="rname" data-page-node-id="tVtLLC0VCjm2a5beV2xowU">人工费</div><div class="rnote" data-page-node-id="7kAf6b3ymvBhjB6E5jpFFZ">混凝土班组</div></div>
+            <div class="ramt num expense" data-page-node-id="uBYCGgaFSUD4hr6P6dZZdF">-¥12,000.00</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer" data-page-node-id="gSVeoYqtD50BSI3KCdvGeV">
+        <div class="btn btn-ghost" data-page-node-id="J00ircRIMNCOPf1sAnXrTa">工程设置</div>
+        <div class="btn btn-primary" data-page-node-id="xsVbkJwe2Tf4R1ap9Haa3S">记一笔</div>
+      </div>
+      <div class="home-bar" data-page-node-id="MEYKGaiEw2HwMgiH6jo22h"></div>
+    </div>
+  </figure>
+
+  <!-- 3. 数据 -->
+  <figure data-page-node-id="hLffeC0ry8GQMQLMNEOi4g">
+    <figcaption data-page-node-id="G7kTO3qCAik3gRiZTq35iA"><b data-page-node-id="KkH5PE16uTSzlCGBb9fHZH">03</b>数据 · 收支趋势与分类占比（纯 CSS 绘制）</figcaption>
+    <div class="phone" data-page-node-id="Lk3x64vM6HKLt5Nw1yYi5x">
+      <div class="statusbar" data-page-node-id="v8eHBieK1KnGeovW1g1DDV"><span data-page-node-id="Z9lloJdznI1YOs60GnmI5k">11:13</span><div class="sb-right" data-page-node-id="JTSU2VM6Xh2PYWlLlVv96H">
+        <div class="sb-bar" style="height:4px" data-page-node-id="xI7uPXXyLdsqKkM0SREvvv"></div><div class="sb-bar" style="height:6px" data-page-node-id="TlTCnYzsNltXFWXStWLL1F"></div>
+        <div class="sb-bar" style="height:8px" data-page-node-id="HMXGR16rWrC3JKeL4q0Iq1"></div><div class="sb-bar" style="height:10px" data-page-node-id="BukbQeMHywJkCLaVph8tk9"></div>
+        <div class="sb-battery" data-page-node-id="d0k587Qe8CAsDhyfIOWpPF"></div></div></div>
+      <div class="navbar" data-page-node-id="mrzCdJwpdlGCwzW6oc2N5Y"><span class="nav-back" data-page-node-id="0YtoIYuUMmB7CQEH12aoT0">返回</span>滨江花园 1 号楼</div>
+      <div class="body" style="padding-top:12px" data-page-node-id="y7uRnCJhtRAWRpjCvMRCiH">
+        <div class="card" style="padding:0;border-radius:8px;box-shadow:none;margin:-12px -12px 0" data-page-node-id="3NIlDKTdZzLRjKUU8G9KYY">
+          <div class="card" style="padding:14px" data-page-node-id="A8IWD5MTMXmrydKDZBtVAx">
+            <div class="dh-top" data-page-node-id="bvv5COJ8hpekUlMYHL64pC">
+              <div class="dh-name ellipsis" data-page-node-id="6ABKHwejK7HKe0uuiWBYtj">滨江花园 1 号楼</div>
+              <div class="tag tag-primary" data-page-node-id="O1OmYXAmpi3oMvajhHgDtL">进行中</div>
+              <div class="arrow" data-page-node-id="xTx8Vh7I7wLAqpQ8wtIMyX"></div>
+            </div>
+            <div style="height:1px;background:#f2f3f5;margin:12px 0" data-page-node-id="3Okso0ZRsetIyLRiW7BxSh"></div>
+            <div class="dh-figs" data-page-node-id="8dkysJiYI0AbcEDHe9zD4A">
+              <div class="dh-fig main" data-page-node-id="MhJYH5wgJRDLgOzUCk2g4e"><span data-page-node-id="u5xt0VXK4Y7O3SblIOCRXl">结余</span><b class="num income" data-page-node-id="x2sfZdh8EHhfmYQ0cqFhBX">¥13.38万</b></div>
+              <div class="dh-fig" data-page-node-id="d2hYhdzF6alJccDUZ2YNE0"><span data-page-node-id="npR3fagTMrnBB3o7S5dttA">收入</span><b class="num income" data-page-node-id="IwJW0RBLPh8f41JrU9EDIN">¥45.80万</b></div>
+              <div class="dh-fig" data-page-node-id="X6BYn8yZi8tUV6AM9w9k8S"><span data-page-node-id="2sE6qRqw8YW7j67euBYUmX">支出</span><b class="num expense" data-page-node-id="LCDdBGAAi5CSKvRsryBIe3">¥32.42万</b></div>
+              <div class="dh-fig" data-page-node-id="hfYnDX2K84BDs0G1ccWbCU"><span data-page-node-id="4k5tMlFbFciHhFLGZEf5KP">笔数</span><b class="num secondary" data-page-node-id="48BepYmvPj0A9kUoGaGucB">42</b></div>
+            </div>
+          </div>
+          <div class="tabs" style="padding:12px 4px 8px" data-page-node-id="rtLDSf6Brg9Bxz2tRaXlWu"><div class="tab" data-page-node-id="xcatLXcGUJkERAfCzrZoO4">明细</div><div class="tab on" data-page-node-id="IzPt2xkkqIpcpeeiMhzjzG">数据</div></div>
+        </div>
+
+        <div class="kpis" data-page-node-id="sD7QFAlp0bxQKCmDO2NMQn">
+          <div class="kpi" data-page-node-id="iaE4G0nK8cvp7v4FL8gAbb"><span data-page-node-id="KAtkEIZfSeMOdmz3H7CFcB">累计收入</span><b class="num income" data-page-node-id="QgsGG0kYL0bY9AU3lSYL4e">¥45.80万</b></div>
+          <div class="kpi" data-page-node-id="yqzXbl0BihvIdUCjAjQNH8"><span data-page-node-id="eIDqKc8BqxQgyUyigDHStj">累计支出</span><b class="num expense" data-page-node-id="xiGk5CtWj5T8Q787XMBH5v">¥32.42万</b></div>
+          <div class="kpi" data-page-node-id="mEKpPXRoDPWAbD2CtQYuSF"><span data-page-node-id="jM4H4ApJqu1yXpHXkZAW21">结余</span><b class="num income" data-page-node-id="tl3ueWiofcq2xjj6Nb90BF">¥13.38万</b></div>
+        </div>
+        <div class="kpisub" data-page-node-id="Uay3Ocj3sKzVeFkq2REal8">
+          <span data-page-node-id="qNcufRy6XD6tSjXpfVwZTY">本月 收 <b class="num income" data-page-node-id="JiUrdckobsdj2hWeaY6Eev">¥8.00万</b></span><span data-page-node-id="wA57V6xOfGhESsr6fSCsjZ">·</span>
+          <span data-page-node-id="j5gmCdtCvKBpeHIgV8jt0f">支 <b class="num expense" data-page-node-id="FqO1KTs0k1Ne85z1ab3Hmn">¥4.56万</b></span><span data-page-node-id="UdMNIBxLehMQiaveMTr7SN">·</span>
+          <span data-page-node-id="6TFIOOgTDSHcBHWfPxpHC5">共 42 笔记录</span>
+        </div>
+
+        <div class="card" data-page-node-id="MZregnJ1rLhD7eqbNvqxjZ">
+          <div class="chead" data-page-node-id="zo05UREAYIPVGpmEjTdFgW">
+            <div data-page-node-id="PrYnCeHtVtIAXj6PW0V28n"><div class="ctitle" data-page-node-id="GpYWwzYFPJrL3tZuMld2nR">收支趋势</div><div class="csub" data-page-node-id="kEn6WNMy39ptearVo3SbDF">最近 6 个月</div></div>
+            <div class="legend" data-page-node-id="CvFZ0GOBbWllHdEAfgxUgj">
+              <div data-page-node-id="RsrRRdC6fyUoXsyfwCRldw"><i style="background:#639922" data-page-node-id="MlNL847BJwkqWGQN1nxUFT"></i>收入</div>
+              <div data-page-node-id="nB0e9eZXpgI7ezKhfkCLa8"><i style="background:#e24b4a" data-page-node-id="yZmBHpRFTYH0IlIlmBoxDw"></i>支出</div>
+            </div>
+          </div>
+          <canvas id="bar" class="cbar" data-page-node-id="3cdOMnMhBO7JoCC6HUTQPo"></canvas>
+          <div class="cfoot" data-page-node-id="pLQCWHQS0AgmJ7MyfjXG5y">近 6 个月合计：收 <b class="num income" data-page-node-id="Lq22dwOGCI9pMeFEqtZE08">¥45.80万</b> 支 <b class="num expense" data-page-node-id="LKY3l1E9xNQxyDlHZDHSs3">¥32.42万</b></div>
+        </div>
+
+        <div class="card" data-page-node-id="ZUUN9XGTTXsHpMJebjpPxw">
+          <div class="chead" data-page-node-id="5iX4nvgueM8P2flMevKfAX">
+            <div data-page-node-id="ZhHQTXd0MmR58VLvTak72H"><div class="ctitle" data-page-node-id="VX6GyUsQox1xHKUbAVvwrH">分类占比</div><div class="csub" data-page-node-id="RtA4AEEUihk2a4Mn3swH1E">支出结构分析</div></div>
+            <div class="miniseg" data-page-node-id="JoQ1CkiL51oqgJAvIc3wMW"><div class="on" data-page-node-id="VwfvadwPG5eXxHdx84cALc">支出</div><div data-page-node-id="kKUR86aiLutajstEHVXfrp">收入</div></div>
+          </div>
+          <canvas id="pie" class="cpie" data-page-node-id="BQEoy49bMTfWbmsnLxmeHW"></canvas>
+          <div class="rank" data-page-node-id="tpD8ghiaD0vPaifyv6l3H1">
+            <div data-page-node-id="9DTBM3AoMkB1OQpgBlLvfe">
+              <div class="ri-top" data-page-node-id="d8FByGgjtJgJokHDy6iwrX"><i class="ri-dot" style="background:#378add" data-page-node-id="A9fXkCE7np3c2lh7A5OkjU"></i><span class="ri-name" data-page-node-id="JoMhINDyE5Sk7YFUNLMFbL">材料费</span><span class="ri-pct num" data-page-node-id="aVhYumjl76x0h6eqqkgWjo">42%</span></div>
+              <div class="ri-bar" data-page-node-id="0idLyEGtqhCY42rWeXB5Ag"><i style="width:42%;background:#378add" data-page-node-id="sJXZY0YZOKSnB94JDZLluv"></i></div>
+              <div class="ri-amt num" data-page-node-id="ddRyCplRtxNHQfrxFbcbMd">¥13.62万 · 15 笔</div>
+            </div>
+            <div data-page-node-id="gFTMrPbKZ0SLoQRqn6dcir">
+              <div class="ri-top" data-page-node-id="8fkCrymtdf8NLZglagdbTY"><i class="ri-dot" style="background:#1d9e75" data-page-node-id="GqVtgzmpmEXGuKBlAhap2w"></i><span class="ri-name" data-page-node-id="zmdgEWDCqHv5A7LMUzVFAK">人工费</span><span class="ri-pct num" data-page-node-id="2UlLUUUDOG22Lq0P15nHHg">26%</span></div>
+              <div class="ri-bar" data-page-node-id="4WOGY7F9xf6o8iyA3XPTBG"><i style="width:26%;background:#1d9e75" data-page-node-id="Lny6Zi4AdaEZmtWvcWO2n0"></i></div>
+              <div class="ri-amt num" data-page-node-id="gRy3XF2TteBe0cvcaaba7g">¥8.43万 · 11 笔</div>
+            </div>
+            <div data-page-node-id="hlfghOAPlQ5V1Tf4blBLuI">
+              <div class="ri-top" data-page-node-id="YCBxCCQ7GlGlFz4bbsFAvS"><i class="ri-dot" style="background:#ef9f27" data-page-node-id="8E515YDuSlEuPxJJR8PsMA"></i><span class="ri-name" data-page-node-id="2ABiYjzYoKEcPUH6kciNlH">机械租赁</span><span class="ri-pct num" data-page-node-id="MSttPVNSbIcTp3zXoiIzB3">12%</span></div>
+              <div class="ri-bar" data-page-node-id="4BHHN8VRfzJFbsxjbxCctF"><i style="width:12%;background:#ef9f27" data-page-node-id="41E9Pmm3J6FLNt2BsXeJ3o"></i></div>
+              <div class="ri-amt num" data-page-node-id="rZUbqEZ0fTJ76mFGTxKXuC">¥3.89万 · 6 笔</div>
+            </div>
+            <div data-page-node-id="4xkGaTDk5DCiVKZl5SYI0S">
+              <div class="ri-top" data-page-node-id="YsY8HzS0EbIDHvRvvVxOmy"><i class="ri-dot" style="background:#d4537e" data-page-node-id="5ku4cSdr73iEKkQNLqaLMx"></i><span class="ri-name" data-page-node-id="mJFWH3P1swTTfltWMFUUQI">运输费</span><span class="ri-pct num" data-page-node-id="pEENPOPatVayt0EFBeNXSh">8%</span></div>
+              <div class="ri-bar" data-page-node-id="gkzpX5B5e4kyj8WK8IKXVL"><i style="width:8%;background:#d4537e" data-page-node-id="Tz3rkwSetchIk5uJtWNEqR"></i></div>
+              <div class="ri-amt num" data-page-node-id="rv5ZPwcIPL9i40VvlDLYAx">¥2.59万 · 5 笔</div>
+            </div>
+            <div data-page-node-id="qi9Ui75eu1HMvXVWGEl6Pj">
+              <div class="ri-top" data-page-node-id="5cRO3ziN4VqiO44wF4SWou"><i class="ri-dot" style="background:#7f77dd" data-page-node-id="fQgB9qO8f040G2d31B4E0d"></i><span class="ri-name" data-page-node-id="3czz0GmFv2PQ4sQAWvftuz">安全措施</span><span class="ri-pct num" data-page-node-id="gFTT5fW3raFg2OlYFg3tLa">6%</span></div>
+              <div class="ri-bar" data-page-node-id="iiM5dAP62pClDIE4CigJua"><i style="width:6%;background:#7f77dd" data-page-node-id="gjVqcOGRg428cqUHtB5EFc"></i></div>
+              <div class="ri-amt num" data-page-node-id="Boogb3Ag279WQ8zxpsGf1M">¥1.95万 · 3 笔</div>
+            </div>
+            <div data-page-node-id="eAtWvWxgl51u5ecWWGkrr7">
+              <div class="ri-top" data-page-node-id="kebGR9YJuDHvKBJxnW6WPx"><i class="ri-dot" style="background:#b4b2a9" data-page-node-id="uWYyLAzRcYTaf52SLNkGzD"></i><span class="ri-name" data-page-node-id="VrVBDBBSdRk4iqu32OXr56">其他支出</span><span class="ri-pct num" data-page-node-id="qgcQ3do35BmLOvfTNcEQ6V">6%</span></div>
+              <div class="ri-bar" data-page-node-id="BcbCr0rLREBb3lIdIPLAJd"><i style="width:6%;background:#b4b2a9" data-page-node-id="3ZnJ81nTezRjuCjRsBJEmM"></i></div>
+              <div class="ri-amt num" data-page-node-id="SL4IeGsG12XyBMqv0xmCPs">¥1.95万 · 2 笔</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer" data-page-node-id="XQcBoIShVIbYApmkUu4tFD">
+        <div class="btn btn-ghost" data-page-node-id="zjpVzRZeZL6XTsFbTQCLSs">工程设置</div>
+        <div class="btn btn-primary" data-page-node-id="xh49hzPY5j1k9WD0FDdH3b">记一笔</div>
+      </div>
+      <div class="home-bar" data-page-node-id="KTb4L3xmoW52JdOf1iaDZe"></div>
+    </div>
+  </figure>
+
+  <!-- 4. 记一笔 -->
+  <figure data-page-node-id="SX0JmJ5IbO7xxT4bXLFcpx">
+    <figcaption data-page-node-id="zsWHWjHDDFFLPyDbzcTAs8"><b data-page-node-id="HQLjWelxeneIl0CsCc9sWE">04</b>记一笔 · 录入与编辑</figcaption>
+    <div class="phone" data-page-node-id="A0BMO4xjGDwu7y6PvdAHnR">
+      <div class="statusbar" data-page-node-id="9DXobz25KFpODLADHobuDW"><span data-page-node-id="klBm8HVxw9PLBK44arweRw">11:13</span><div class="sb-right" data-page-node-id="99pF2XENKH8SJtrNVioFh6">
+        <div class="sb-bar" style="height:4px" data-page-node-id="t5DOcoGxEewCUmMpJXKBLo"></div><div class="sb-bar" style="height:6px" data-page-node-id="kzi8VuWgiJDUobxuqNlrgE"></div>
+        <div class="sb-bar" style="height:8px" data-page-node-id="LHCHPHiKNWMm7x2Ti5tkz3"></div><div class="sb-bar" style="height:10px" data-page-node-id="fEhq6lTlG85T5KrteA2N0H"></div>
+        <div class="sb-battery" data-page-node-id="MHCpStbVlicj2oI1wBp0DD"></div></div></div>
+      <div class="navbar" data-page-node-id="B8XCslXfXXCE9EFbCE4GiE"><span class="nav-back" data-page-node-id="ejruFWEAv1mDqvVJB2KenK">取消</span>记一笔</div>
+      <div class="body" data-page-node-id="TC3h9B1qFZ2xBBbpyBtySM">
+        <div class="tswitch" data-page-node-id="uncedceM2kxBzOKCbbvRoA"><div class="ts on-e" data-page-node-id="DeCn0NfTVQkEtKyQWNVaBz">支出</div><div class="ts" data-page-node-id="VY8Qh0jC06cOKQXlwxaJG3">收入</div></div>
+        <div class="card amount-card" data-page-node-id="yuhS1yvVcSiPIZwYMD2AAi">
+          <div class="alabel" data-page-node-id="UhlbPojrAm7WATSX6GOHZC">金额（元）</div>
+          <div class="arow" data-page-node-id="j2l4Ps0PWeijwgEH8ttCIu"><span class="asym expense" data-page-node-id="idrX2MDuGEXBQBBo0GXJxZ">¥</span><span class="ainput num" data-page-node-id="kmnEG2GSQbxGv2NBvVwCje">12,600.00</span></div>
+        </div>
+        <div class="card" data-page-node-id="FsloQUnjYwnWBj0tqxSnjC">
+          <div class="row" data-page-node-id="tnx5BptVHJAkLoyr8DGBBB">
+            <span class="rowlabel" data-page-node-id="G8LgVzrdoRFSobWd6iABSy">日期</span>
+            <div class="rowval" data-page-node-id="ciPXReyYgpc2HXiLZq1dFk">2026-09-05<em data-page-node-id="aphFGCPuHHV8FaNicVCwR7">周六</em><div class="arrow" style="margin-left:10px" data-page-node-id="V50jOONy6hQED9HYzvHxQe"></div></div>
+          </div>
+        </div>
+        <div class="card" data-page-node-id="28JlntcRYq0CNOYacZk7sD">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#9ca3af" data-page-node-id="6i70UuQSi2f0qPjCqoF51N">
+            <span data-page-node-id="SBbAtvx2zP3t4mmTg6ughH">费用类别</span><span style="color:#185fa5;background:#e6f1fb;padding:2px 8px;border-radius:4px" data-page-node-id="o61SAhWYUz2LFy6FaogLQS">管理</span>
+          </div>
+          <div class="grid" data-page-node-id="cH6Yh20BQpHMPvt1UDzA5v">
+            <div class="cell on" style="background:#378add" data-page-node-id="QzVdACJfPS4easaVEHKZIF">材料费</div>
+            <div class="cell" data-page-node-id="RNEOozNpZRMNOEDDbCciSW">人工费</div>
+            <div class="cell" data-page-node-id="AXPbxD95DnEGxrEqTt6yJq">机械租赁</div>
+            <div class="cell" data-page-node-id="SesLJaulp0DeeR0BKQ4ct5">分包工程</div>
+            <div class="cell" data-page-node-id="9w1qHV4QQ5nDD8gcN0Km0M">运输费</div>
+            <div class="cell" data-page-node-id="4kMBsDvS2SEHyf3TPnsBAt">周转材料</div>
+            <div class="cell" data-page-node-id="NSroS9UkvP6nGkEhbpW8Hc">安全措施</div>
+            <div class="cell" data-page-node-id="qYyxlgExQp2cv0EVSkR53v">水电费</div>
+            <div class="cell" data-page-node-id="YHYTZwNVunzYqSHwgE7eaC">住宿餐饮</div>
+            <div class="cell" data-page-node-id="jxa4a6L1AqeXw3MBk1mzNc">办公费</div>
+            <div class="cell" data-page-node-id="ACUvKuxYpt51AHHzS6CfQZ">检测试验</div>
+            <div class="cell add" data-page-node-id="76bSQuRfYDJUeupAv8RP7D"><b data-page-node-id="50VhbjXEuYAppfvAx514SC">+</b><span data-page-node-id="CfA7JTzAGjmAnMjh1jpzeF">自定义</span></div>
+          </div>
+        </div>
+        <div class="card" data-page-node-id="ahIce5Dlzmq0aVBwDYiICm">
+          <div class="row" data-page-node-id="6saEd4T5vPlApEGHAnzTCo">
+            <span class="rowlabel" data-page-node-id="Iq21xIH9aE7pqXGxLKfKKS">备注</span>
+            <span class="rowinput" data-page-node-id="FIQHXPQIHqFIURoLBHWSTz">钢筋 3.2 吨</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer" data-page-node-id="APEq4eADUit8XXcuWo5y9f"><div class="btn btn-primary" data-page-node-id="tK2Sh7dHammbaOkdINJSpo">保存</div></div>
+      <div class="home-bar" data-page-node-id="FYydrbfhLPwlMsxX4BAimU"></div>
+    </div>
+  </figure>
+
+</div>
+
+<script>
+(function () {
+  var GRID = '#F2F3F5', LABEL = '#9CA3AF', TEXT = '#1A1A1A';
+  var INCOME = '#639922', EXPENSE = '#E24B4A';
+
+  function compact(fen) {
+    var y = Math.abs(fen) / 100;
+    if (y >= 1e8) return (y / 1e8).toFixed(1) + '亿';
+    if (y >= 1e4) return (y / 1e4).toFixed(1) + '万';
+    if (y >= 1000) return Math.round(y) + '';
+    return y.toFixed(y % 1 === 0 ? 0 : 1);
+  }
+
+  function setup(id, w, h, draw) {
+    var canvas = document.getElementById(id);
+    if (!canvas) return;
+    var dpr = window.devicePixelRatio || 2;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.height = h + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    draw(ctx, w, h);
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    if (h <= 0 || w <= 0) return;
+    r = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.arcTo(x + w, y, x + w, y + r, r);
+    ctx.lineTo(x + w, y + h);
+    ctx.lineTo(x, y + h);
+    ctx.lineTo(x, y + r);
+    ctx.arcTo(x, y, x + r, y, r);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  /* ---------- 环形图 ---------- */
+  var pieData = [
+    { name: '材料费', color: '#378add', total: 13616400, percent: 42 },
+    { name: '人工费', color: '#1d9e75', total: 8429200, percent: 26 },
+    { name: '机械租赁', color: '#ef9f27', total: 3890400, percent: 12 },
+    { name: '运输费', color: '#d4537e', total: 2593600, percent: 8 },
+    { name: '安全措施', color: '#7f77dd', total: 1945200, percent: 6 },
+    { name: '其他支出', color: '#b4b2a9', total: 1945200, percent: 6 }
+  ];
+
+  setup('pie', 327, 190, function (ctx, w, h) {
+    var total = pieData.reduce(function (s, d) { return s + d.total; }, 0);
+    var cx = w / 2, cy = h / 2;
+    var r = Math.min(w, h) / 2 - 6;
+    var lw = Math.max(16, r * 0.46);
+    var start = -Math.PI / 2;
+    var gap = 0.012;
+    pieData.forEach(function (d) {
+      var angle = d.total / total * Math.PI * 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - lw / 2, start, start + Math.max(angle - gap, 0.004));
+      ctx.strokeStyle = d.color;
+      ctx.lineWidth = lw;
+      ctx.stroke();
+      start += angle;
+    });
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = LABEL;
+    ctx.font = '11px sans-serif';
+    ctx.fillText('总支出', cx, cy - 14);
+    ctx.fillStyle = TEXT;
+    ctx.font = '500 17px sans-serif';
+    ctx.fillText(compact(total), cx, cy + 8);
+  });
+
+  /* ---------- 柱状图 ---------- */
+  var bars = [
+    { label: '4月', income: 12000000, expense: 5200000 },
+    { label: '5月', income: 9800000, expense: 6800000 },
+    { label: '6月', income: 16000000, expense: 4500000 },
+    { label: '7月', income: 0, expense: 3800000 },
+    { label: '8月', income: 0, expense: 7560000 },
+    { label: '9月', income: 8000000, expense: 4560000 }
+  ];
+
+  setup('bar', 327, 170, function (ctx, w, h) {
+    var padTop = 26, padBottom = 22, padSide = 4;
+    var max = 0;
+    bars.forEach(function (d) {
+      if (d.income > max) max = d.income;
+      if (d.expense > max) max = d.expense;
+    });
+    var step = Math.pow(10, Math.floor(Math.log10(max / 100)));
+    var top = Math.ceil(max / 100 / step) * step * 100;
+    var chartH = h - padTop - padBottom;
+    var groupW = (w - padSide * 2) / bars.length;
+    var barW = Math.min(13, groupW * 0.3);
+    var gapInner = 4;
+
+    ctx.strokeStyle = GRID;
+    ctx.lineWidth = 1;
+    ctx.fillStyle = LABEL;
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    [0, 0.5, 1].forEach(function (ratio) {
+      var y = padTop + chartH * ratio;
+      ctx.beginPath();
+      ctx.moveTo(padSide, Math.round(y) + 0.5);
+      ctx.lineTo(w - padSide, Math.round(y) + 0.5);
+      ctx.stroke();
+      ctx.fillText(compact(top * (1 - ratio)), padSide + 2, y - 8);
+    });
+
+    bars.forEach(function (d, i) {
+      var cx = padSide + groupW * i + groupW / 2;
+      var x1 = cx - gapInner / 2 - barW;
+      var x2 = cx + gapInner / 2;
+      var hI = d.income / top * chartH;
+      var hE = d.expense / top * chartH;
+      if (d.income > 0) { ctx.fillStyle = INCOME; roundRect(ctx, x1, padTop + chartH - hI, barW, hI, 2); }
+      if (d.expense > 0) { ctx.fillStyle = EXPENSE; roundRect(ctx, x2, padTop + chartH - hE, barW, hE, 2); }
+      ctx.fillStyle = LABEL;
+      ctx.font = '10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(d.label, cx, padTop + chartH + 6);
+    });
+  });
+})();
+</script>
+</body>
+</html>

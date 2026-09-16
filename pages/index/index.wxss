@@ -1,0 +1,222 @@
+/* ---------- 顶部总览 ---------- */
+.hero {
+  background: linear-gradient(0deg, #185fa5 0%, #1f6fb8 100%);
+  border-radius: var(--radius);
+  padding: 36rpx 32rpx 32rpx;
+  color: #fff;
+  margin-bottom: 24rpx;
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-label {
+  font-size: 24rpx;
+  opacity: 0.82;
+}
+
+.text-toggle {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  padding: 8rpx 20rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.55);
+  border-radius: 28rpx;
+  font-size: 22rpx;
+  color: #fff;
+  line-height: 1;
+}
+
+.text-toggle-on {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-balance {
+  font-size: 56rpx;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-top: 4rpx;
+  color: #fff;
+}
+
+.hero-row {
+  display: flex;
+  align-items: center;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid rgba(255, 255, 255, 0.22);
+}
+
+.hero-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.hero-item-label {
+  font-size: 22rpx;
+  opacity: 0.82;
+}
+
+.hero-item-value {
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-top: 4rpx;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hero-divider {
+  width: 2rpx;
+  height: 44rpx;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ---------- 分段筛选 ---------- */
+.segment {
+  display: flex;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  padding: 6rpx;
+  margin-bottom: 24rpx;
+}
+
+.segment-item {
+  flex: 1;
+  text-align: center;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+  border-radius: 8rpx;
+  transition: all 0.18s;
+}
+
+.segment-item-active {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* ---------- 工程列表 ---------- */
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24rpx;
+}
+
+.project-card {
+  width: 100%;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28rpx;
+  box-shadow: 0 2rpx 12rpx rgba(16, 24, 40, 0.04);
+  transition: transform 0.15s;
+}
+
+.project-card:active {
+  transform: scale(0.985);
+}
+
+.pc-head {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.pc-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.pc-status-tag {
+  flex-shrink: 0;
+}
+
+.pc-more {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rpx;
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: -12rpx;
+}
+
+.dot {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+
+.pc-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: var(--text-2);
+}
+
+.pc-meta-label {
+  color: var(--text-3);
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+.pc-divider {
+  height: 2rpx;
+  background: var(--line-2);
+  margin: 22rpx 0;
+}
+
+.pc-figures {
+  display: flex;
+  align-items: flex-start;
+}
+
+.pc-fig {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-fig-label {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.pc-fig-value {
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-top: 4rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pc-fig-count {
+  text-align: right;
+}
+
+.pc-fig-count .pc-fig-value {
+  font-weight: 400;
+}
+
+/* ---------- 大屏适配：两列 ---------- */
+@media (min-width: 640px) {
+  .project-card {
+    width: calc(50% - 12rpx);
+  }
+}

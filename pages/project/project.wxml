@@ -1,0 +1,105 @@
+<view class="page {{largeText ? 'lt' : ''}}">
+
+  <view class="card">
+    <view class="form-item">
+      <view class="form-label"><text class="required">*</text>工程名称</view>
+      <input
+        class="form-input"
+        placeholder="如：XX小区1号楼装修工程"
+        placeholder-class="form-placeholder"
+        value="{{form.name}}"
+        data-field="name"
+        bindinput="onInput"
+        maxlength="40"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">甲方 / 单位</view>
+      <input
+        class="form-input"
+        placeholder="选填，如：XX置业有限公司"
+        placeholder-class="form-placeholder"
+        value="{{form.client}}"
+        data-field="client"
+        bindinput="onInput"
+        maxlength="40"
+      />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="form-item">
+      <view class="form-label">开工日期</view>
+      <picker mode="date" value="{{form.startDate}}" data-field="startDate" bindchange="onDateChange">
+        <view class="form-picker">
+          <text class="{{form.startDate ? '' : 'placeholder'}}">{{form.startDate || '选择日期'}}</text>
+          <view class="arrow"></view>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">完工日期</view>
+      <view class="enddate-line">
+        <picker
+          class="flex-1"
+          mode="date"
+          disabled="{{form.endDateTentative}}"
+          value="{{form.endDate || today}}"
+          start="{{form.startDate}}"
+          data-field="endDate"
+          bindchange="onDateChange"
+        >
+          <view class="form-picker">
+            <text class="{{form.endDateTentative || !form.endDate ? 'placeholder' : ''}}">{{form.endDateTentative ? '暂定，日期未确定' : (form.endDate || '选择日期')}}</text>
+            <view class="arrow" wx:if="{{!form.endDateTentative}}"></view>
+          </view>
+        </picker>
+        <view
+          class="chip chip-sm {{form.endDateTentative ? 'chip-active' : ''}}"
+          bindtap="onTentativeToggle"
+        >暂定</view>
+      </view>
+    </view>
+
+    <view class="form-item form-item-last">
+      <view class="form-label">工程状态</view>
+      <view class="chip-group">
+        <view
+          wx:for="{{statusOptions}}"
+          wx:key="key"
+          class="chip {{form.status === item.key ? 'chip-active' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="onStatusChange"
+        >{{item.label}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="form-item form-item-last">
+      <view class="form-label">备注</view>
+      <textarea
+        class="form-textarea"
+        placeholder="选填，如：合同金额、付款节点等"
+        placeholder-class="form-placeholder"
+        value="{{form.note}}"
+        data-field="note"
+        bindinput="onInput"
+        maxlength="200"
+        auto-height
+      ></textarea>
+    </view>
+  </view>
+
+  <view class="tip" wx:if="{{isEdit}}">
+    提示：删除工程会同时删除该工程下的所有费用记录，请谨慎操作。
+  </view>
+
+</view>
+
+<view class="footer-bar {{largeText ? 'lt' : ''}}">
+  <button class="btn btn-danger btn-block btn-hover" wx:if="{{isEdit}}" bindtap="onDelete">删除工程</button>
+  <button class="btn btn-primary btn-block" bindtap="onSave">保存</button>
+</view>

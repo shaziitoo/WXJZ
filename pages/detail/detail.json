@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "工程详情",
+  "usingComponents": {
+    "record-list": "/components/record-list/record-list"
+  }
+}

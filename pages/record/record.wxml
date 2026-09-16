@@ -1,0 +1,97 @@
+<view class="page {{largeText ? 'lt' : ''}}">
+
+  <!-- 支出 / 收入 切换（非固定类型时显示） -->
+  <view class="type-switch" wx:if="{{!fixedType}}">
+    <view
+      class="ts-item {{form.type === 'expense' ? 'ts-item-expense' : ''}}"
+      data-type="expense"
+      bindtap="onTypeChange"
+    >支出</view>
+    <view
+      class="ts-item {{form.type === 'income' ? 'ts-item-income' : ''}}"
+      data-type="income"
+      bindtap="onTypeChange"
+    >收入</view>
+  </view>
+
+  <!-- 金额 -->
+  <view class="card amount-card">
+    <view class="amount-label">金额（元）</view>
+    <view class="amount-row">
+      <text class="amount-symbol {{form.type === 'income' ? 'money-income' : 'money-expense'}}">¥</text>
+      <input
+        class="amount-input num"
+        type="digit"
+        value="{{amount}}"
+        bindinput="onAmountInput"
+        placeholder="0.00"
+        placeholder-class="amount-placeholder"
+        maxlength="12"
+      />
+    </view>
+  </view>
+
+  <!-- 日期 -->
+  <view class="card">
+    <view class="row">
+      <view class="row-label">日期</view>
+      <picker mode="date" value="{{form.date}}" end="{{today}}" bindchange="onDateChange">
+        <view class="row-value">
+          <text class="num">{{form.date}}</text>
+          <text class="row-weekday">{{form.weekday}}</text>
+          <view class="arrow"></view>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 类别 -->
+  <view class="card">
+    <view class="cat-title">
+      <text>费用类别</text>
+      <text class="cat-manage" bindtap="goCategory">管理</text>
+    </view>
+    <view class="cat-grid">
+      <view
+        wx:for="{{categories}}"
+        wx:key="id"
+        class="cat-cell {{form.categoryId === item.id ? 'cat-cell-active' : ''}}"
+        style="{{form.categoryId === item.id ? 'background:' + item.color + ';border-color:' + item.color : ''}}"
+        data-id="{{item.id}}"
+        data-name="{{item.name}}"
+        bindtap="onCategoryChange"
+      >
+        <text class="cat-cell-text">{{item.name}}</text>
+      </view>
+      <view class="cat-cell cat-cell-add" bindtap="goCategory">
+        <text class="cat-cell-add-icon">+</text>
+        <text class="cat-cell-text">自定义</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="card">
+    <view class="row">
+      <view class="row-label">备注</view>
+      <input
+        class="row-input"
+        placeholder="选填，如：水泥 50 包"
+        placeholder-class="form-placeholder"
+        value="{{form.note}}"
+        bindinput="onNoteInput"
+        maxlength="60"
+      />
+    </view>
+  </view>
+
+  <view class="form-tip" wx:if="{{isEdit}}">
+    记录创建于 {{createdText}}
+  </view>
+
+</view>
+
+<view class="footer-bar {{largeText ? 'lt' : ''}}">
+  <button class="btn btn-danger btn-block btn-hover" wx:if="{{isEdit}}" bindtap="onDelete">删除</button>
+  <button class="btn btn-primary btn-block" bindtap="onSave">保存</button>
+</view>

@@ -1,0 +1,329 @@
+.rl {
+  width: 100%;
+  padding-top: 4rpx;
+}
+
+/* ---------- 筛选栏 ---------- */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.fb-types {
+  display: flex;
+  gap: 12rpx;
+}
+
+.fb-type {
+  padding: 0 28rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+  background: var(--line-2);
+}
+
+.fb-type-active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 500;
+}
+
+.fb-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+  padding: 0 20rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  background: var(--line-2);
+}
+
+.fb-toggle-active {
+  color: var(--primary);
+  background: var(--primary-light);
+  font-weight: 500;
+}
+
+.fb-caret {
+  width: 0;
+  height: 0;
+  border-left: 8rpx solid transparent;
+  border-right: 8rpx solid transparent;
+  border-top: 10rpx solid currentColor;
+  transition: transform 0.2s;
+}
+
+.fb-caret-up {
+  transform: rotate(180deg);
+}
+
+/* ---------- 筛选面板 ---------- */
+.filter-panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 8rpx 28rpx 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.fp-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid var(--line-2);
+}
+
+.fp-row-col {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.fp-label {
+  font-size: 26rpx;
+  color: var(--text-2);
+  width: 130rpx;
+  flex-shrink: 0;
+}
+
+.fp-row-col .fp-label {
+  width: auto;
+  margin-bottom: 16rpx;
+}
+
+.fp-dates {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.fp-date {
+  flex: 1;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  font-size: 26rpx;
+  color: var(--text);
+}
+
+.fp-wave {
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.fp-cats {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.fp-cat {
+  display: inline-block;
+  padding: 0 28rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 25rpx;
+  color: var(--text-2);
+  background: var(--line-2);
+  margin-right: 14rpx;
+}
+
+.fp-cat-active {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.fp-input {
+  flex: 1;
+  min-width: 0;
+  height: 64rpx;
+  line-height: 64rpx;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  color: var(--text);
+}
+
+.fp-placeholder {
+  color: var(--text-3);
+  font-size: 26rpx;
+}
+
+.fp-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20rpx;
+  padding-top: 24rpx;
+}
+
+.fp-reset,
+.fp-done {
+  padding: 0 36rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 32rpx;
+  font-size: 26rpx;
+}
+
+.fp-reset {
+  color: var(--text-2);
+  background: var(--line-2);
+}
+
+.fp-done {
+  color: #fff;
+  background: var(--primary);
+}
+
+/* ---------- 筛选结果小计 ---------- */
+.filter-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  padding: 16rpx 24rpx;
+  background: var(--primary-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20rpx;
+  font-size: 24rpx;
+  color: var(--text-2);
+}
+
+.fs-text {
+  color: var(--primary);
+}
+
+.fs-item {
+  color: var(--text-2);
+}
+
+/* ---------- 分组列表 ---------- */
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.group {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(16, 24, 40, 0.04);
+}
+
+.group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 28rpx;
+  background: #fafbfc;
+  border-bottom: 2rpx solid var(--line-2);
+}
+
+.gh-left {
+  display: flex;
+  align-items: baseline;
+  gap: 12rpx;
+}
+
+.gh-date {
+  font-size: 26rpx;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.gh-weekday {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.gh-right {
+  display: flex;
+  gap: 20rpx;
+}
+
+.gh-figure {
+  font-size: 24rpx;
+}
+
+.record {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+  border-bottom: 2rpx solid var(--line-2);
+}
+
+.record:last-child {
+  border-bottom: none;
+}
+
+.record:active {
+  background: #fafbfc;
+}
+
+.r-color {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 10rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.r-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.r-name {
+  font-size: 28rpx;
+  color: var(--text);
+}
+
+.r-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.r-type {
+  font-size: 18rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 6rpx;
+  flex-shrink: 0;
+}
+
+.r-type.tag-income {
+  color: var(--income);
+  background: var(--income-light);
+}
+
+.r-type.tag-expense {
+  color: var(--expense);
+  background: var(--expense-light);
+}
+
+.r-note {
+  font-size: 23rpx;
+  color: var(--text-3);
+  margin-top: 2rpx;
+}
+
+.r-amount {
+  font-size: 30rpx;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-left: 20rpx;
+}

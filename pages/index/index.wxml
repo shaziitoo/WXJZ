@@ -1,0 +1,108 @@
+<view class="page {{largeText ? 'lt' : ''}}">
+
+  <!-- 顶部总览 -->
+  <view class="hero">
+    <view class="hero-top">
+      <view class="hero-label">全部工程合计</view>
+      <view class="text-toggle {{largeText ? 'text-toggle-on' : ''}}" bindtap="toggleLargeText">{{largeText ? '标准版' : '大字版'}}</view>
+    </view>
+    <view class="hero-balance num {{total.balanceClass}}">{{total.balanceText}}</view>
+    <view class="hero-row">
+      <view class="hero-item">
+        <text class="hero-item-label">总收入</text>
+        <text class="hero-item-value num money-income">{{total.incomeText}}</text>
+      </view>
+      <view class="hero-divider"></view>
+      <view class="hero-item">
+        <text class="hero-item-label">总支出</text>
+        <text class="hero-item-value num money-expense">{{total.expenseText}}</text>
+      </view>
+      <view class="hero-divider"></view>
+      <view class="hero-item">
+        <text class="hero-item-label">工程数</text>
+        <text class="hero-item-value num">{{total.projectCount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 状态筛选 -->
+  <view class="segment" wx:if="{{projects.length > 0}}">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="segment-item {{tab === item.key ? 'segment-item-active' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onTabChange"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- 工程列表 -->
+  <view class="project-list" wx:if="{{list.length > 0}}">
+    <view
+      class="project-card"
+      wx:for="{{list}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goDetail"
+      bindlongpress="onMore"
+    >
+      <view class="pc-head">
+        <view class="pc-title text-ellipsis">{{item.name}}</view>
+        <view class="pc-status-tag tag {{item.statusClass}}">{{item.statusText}}</view>
+        <view class="pc-more" catchtap="onMore" data-id="{{item.id}}">
+          <view class="dot"></view><view class="dot"></view><view class="dot"></view>
+        </view>
+      </view>
+
+      <view class="pc-meta" wx:if="{{item.client}}">
+        <text class="pc-meta-label">甲方</text>
+        <text class="text-ellipsis">{{item.client}}</text>
+      </view>
+      <view class="pc-meta" wx:if="{{item.period}}">
+        <text class="pc-meta-label">工期</text>
+        <text class="text-ellipsis">{{item.period}}</text>
+      </view>
+
+      <view class="pc-divider"></view>
+
+      <view class="pc-figures">
+        <view class="pc-fig">
+          <text class="pc-fig-label">收入</text>
+          <text class="pc-fig-value num money-income">{{item.incomeText}}</text>
+        </view>
+        <view class="pc-fig">
+          <text class="pc-fig-label">支出</text>
+          <text class="pc-fig-value num money-expense">{{item.expenseText}}</text>
+        </view>
+        <view class="pc-fig">
+          <text class="pc-fig-label">结余</text>
+          <text class="pc-fig-value num {{item.balanceClass}}">{{item.balanceText}}</text>
+        </view>
+        <view class="pc-fig pc-fig-count">
+          <text class="pc-fig-label">笔数</text>
+          <text class="pc-fig-value num t-secondary">{{item.count}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:elif="{{projects.length === 0}}">
+    <view class="empty-icon"></view>
+    <view class="empty-text">还没有工程项目</view>
+    <view class="empty-tip">点击下方按钮创建第一个工程</view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-icon"></view>
+    <view class="empty-text">没有符合条件的工程</view>
+    <view class="empty-tip">切换上方筛选试试</view>
+  </view>
+
+</view>
+
+<!-- 底部操作条 -->
+<view class="footer-bar {{largeText ? 'lt' : ''}}">
+  <button class="btn btn-primary btn-block" bindtap="onCreate">新建工程</button>
+  <button class="btn btn-ghost btn-block" bindtap="goCategory">类别管理</button>
+</view>

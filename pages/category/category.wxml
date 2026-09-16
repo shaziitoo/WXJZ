@@ -1,0 +1,58 @@
+<view class="page {{largeText ? 'lt' : ''}}">
+
+  <view class="segment">
+    <view
+      class="segment-item {{type === 'expense' ? 'segment-item-active' : ''}}"
+      data-type="expense"
+      bindtap="onTypeChange"
+    >支出类别</view>
+    <view
+      class="segment-item {{type === 'income' ? 'segment-item-active' : ''}}"
+      data-type="income"
+      bindtap="onTypeChange"
+    >收入类别</view>
+  </view>
+
+  <view class="card">
+    <view class="cat-head">
+      <view class="card-title">{{type === 'expense' ? '支出类别' : '收入类别'}}</view>
+      <view class="cat-reset" bindtap="onReset">恢复默认</view>
+    </view>
+    <view class="card-sub">共 {{list.length}} 个类别，点击右侧可重命名或删除</view>
+
+    <view class="cat-list">
+      <view class="cat-item" wx:for="{{list}}" wx:key="id">
+        <view class="cat-color" style="background: {{item.color}}"></view>
+        <view class="cat-name text-ellipsis">{{item.name}}</view>
+        <view class="cat-tag tag tag-gray" wx:if="{{!item.builtin}}">自定义</view>
+        <view class="cat-actions">
+          <view class="cat-action" data-id="{{item.id}}" data-name="{{item.name}}" catchtap="onRename">重命名</view>
+          <view class="cat-action cat-action-danger" data-id="{{item.id}}" data-name="{{item.name}}" catchtap="onRemove">删除</view>
+        </view>
+      </view>
+
+      <view class="empty empty-sm" wx:if="{{list.length === 0}}">
+        <view class="empty-text">暂无类别</view>
+        <view class="empty-tip">在下方输入名称添加</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip">
+    说明：类别为全局共享，所有工程共用同一套。删除类别后，已有记录仍会保留原类别名称，统计数据不受影响。
+  </view>
+
+</view>
+
+<view class="footer-bar {{largeText ? 'lt' : ''}}">
+  <input
+    class="add-input"
+    placeholder="输入新类别名称"
+    placeholder-class="form-placeholder"
+    value="{{inputName}}"
+    bindinput="onInputName"
+    bindconfirm="onAdd"
+    maxlength="10"
+  />
+  <button class="btn btn-primary add-btn" bindtap="onAdd">添加</button>
+</view>

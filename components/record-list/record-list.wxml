@@ -1,0 +1,124 @@
+<view class="rl">
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="fb-types">
+      <view
+        wx:for="{{typeTabs}}"
+        wx:key="key"
+        class="fb-type {{filter.type === item.key ? 'fb-type-active' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="onTypeChange"
+      >{{item.label}}</view>
+    </view>
+    <view class="fb-toggle {{filterActive ? 'fb-toggle-active' : ''}}" bindtap="toggleFilter">
+      <text>筛选</text>
+      <view class="fb-caret {{showFilter ? 'fb-caret-up' : ''}}"></view>
+    </view>
+  </view>
+
+  <!-- 展开的筛选面板 -->
+  <view class="filter-panel" wx:if="{{showFilter}}">
+    <view class="fp-row">
+      <view class="fp-label">日期区间</view>
+      <view class="fp-dates">
+        <picker mode="date" value="{{filter.start}}" data-field="start" bindchange="onDateChange">
+          <view class="fp-date {{filter.start ? '' : 'fp-placeholder'}}">{{filter.start || '开始'}}</view>
+        </picker>
+        <text class="fp-wave">~</text>
+        <picker mode="date" value="{{filter.end}}" start="{{filter.start}}" data-field="end" bindchange="onDateChange">
+          <view class="fp-date {{filter.end ? '' : 'fp-placeholder'}}">{{filter.end || '结束'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="fp-row fp-row-col">
+      <view class="fp-label">类别</view>
+      <scroll-view scroll-x class="fp-cats">
+        <view class="fp-cat {{filter.categoryId === '' ? 'fp-cat-active' : ''}}" data-id="" bindtap="onCategoryChange">全部</view>
+        <view
+          wx:for="{{categories}}"
+          wx:key="id"
+          class="fp-cat {{filter.categoryId === item.id ? 'fp-cat-active' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="onCategoryChange"
+        >{{item.name}}</view>
+      </scroll-view>
+    </view>
+
+    <view class="fp-row">
+      <view class="fp-label">关键字</view>
+      <input
+        class="fp-input"
+        placeholder="搜索备注 / 类别"
+        placeholder-class="fp-placeholder"
+        value="{{filter.keyword}}"
+        bindinput="onKeywordInput"
+        confirm-type="search"
+        maxlength="30"
+      />
+    </view>
+
+    <view class="fp-actions">
+      <view class="fp-reset" bindtap="onResetFilter">重置</view>
+      <view class="fp-done" bindtap="toggleFilter">完成</view>
+    </view>
+  </view>
+
+  <!-- 筛选结果小计 -->
+  <view class="filter-summary" wx:if="{{filterActive}}">
+    <text class="fs-text">筛选结果 {{filteredCount}} 笔</text>
+    <text class="fs-item">收 <text class="num money-income">{{summary.incomeText}}</text></text>
+    <text class="fs-item">支 <text class="num money-expense">{{summary.expenseText}}</text></text>
+    <text class="fs-item">余 <text class="num {{summary.balanceClass}}">{{summary.balanceText}}</text></text>
+  </view>
+
+  <!-- 流水列表 -->
+  <view class="groups" wx:if="{{groups.length > 0}}">
+    <view class="group" wx:for="{{groups}}" wx:for-item="group" wx:key="date">
+      <view class="group-head">
+        <view class="gh-left">
+          <text class="gh-date">{{group.label}}</text>
+          <text class="gh-weekday">{{group.weekday}}</text>
+        </view>
+        <view class="gh-right">
+          <text class="gh-figure num money-income" wx:if="{{group.income > 0}}">{{group.incomeText}}</text>
+          <text class="gh-figure num money-expense" wx:if="{{group.expense > 0}}">{{group.expenseText}}</text>
+        </view>
+      </view>
+
+      <view
+        class="record"
+        wx:for="{{group.items}}"
+        wx:for-item="item"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onEdit"
+        bindlongpress="onLongPress"
+      >
+        <view class="r-color" style="background: {{item.color}}"></view>
+        <view class="r-main">
+          <view class="r-name-row">
+            <view class="r-name text-ellipsis">{{item.categoryName}}</view>
+            <view class="r-type {{item.typeClass}}" wx:if="{{filter.type === 'all'}}">{{item.typeText}}</view>
+          </view>
+          <view class="r-note text-ellipsis" wx:if="{{item.note}}">{{item.note}}</view>
+        </view>
+        <view class="r-amount num {{item.amountClass}}">{{item.amountText}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:elif="{{records.length === 0}}">
+    <view class="empty-icon"></view>
+    <view class="empty-text">还没有费用记录</view>
+    <view class="empty-tip">点击底部「记一笔」开始记录</view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-icon"></view>
+    <view class="empty-text">没有符合条件的记录</view>
+    <view class="empty-tip">调整筛选条件试试</view>
+  </view>
+
+</view>
