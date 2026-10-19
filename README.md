@@ -80,3 +80,11 @@ cost-manager/
 - **预算与超支预警**：工程模型加 `budget` 字段，数据页计算已用比例
 - **票据照片**：记录上加 `images` 字段，用 `wx.chooseMedia` + 云存储
 - **导出账单**：`store.exportAll()` 已有数据出口，接 CSV 生成或 Canvas 长图分享
+- 
+## 许可证
+
+本项目为学习用途，仅供个人学习与演示，请勿用于商业用途。
+
+---
+
+Made with ❤️ by 丿神灬大少
